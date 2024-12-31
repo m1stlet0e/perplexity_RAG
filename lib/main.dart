@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
        scaffoldBackgroundColor:  AppColors.background,
+       colorScheme: ColorScheme.fromSeed(seedColor:AppColors.submitButton),
        textTheme:GoogleFonts.interTextTheme(
         ThemeData.dark().textTheme,//a theme where everything is in dark mode so the text will be white(dark mode ki text theme is accessed)
        ),
