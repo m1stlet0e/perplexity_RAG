@@ -6,7 +6,7 @@ class SideBarButton extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  SideBarButton({
+  const SideBarButton({
     super.key,
     required this.isCollapsed,
     required this.icon,
@@ -31,7 +31,7 @@ class SideBarButton extends StatelessWidget {
             ? const SizedBox()
             : Text(
                 text,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

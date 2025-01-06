@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
       body:Row(
         children: [
           //side navbar
-          SideBar(),
+          const SideBar(),
 
 
           //column containg 3 things-text,search bar and footer
@@ -23,16 +23,16 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 //text
-                Expanded(child: SearchSection()),
+                const Expanded(child: SearchSection()),
                 //search bar
                 Container(
                   height: 20,
                 ),
                 //footer
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   //we used wrap instead of row because wrap will automatically wrap the children to the next line if the width is not enough
-                  child: Wrap(
+                  child: const Wrap(
                     alignment: WrapAlignment.center,
                     children: [
                       Padding(

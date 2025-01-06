@@ -35,8 +35,8 @@ class SearchSection extends StatelessWidget {
               children: [
                 //textfield and not a text form field because i am not validating anything
                 //it is just a form where i can put enter
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: "Search anything...",
@@ -58,21 +58,21 @@ class SearchSection extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
                     children: [
-                      SearchBarButton(
+                      const SearchBarButton(
                         icon: Icons.auto_awesome_outlined,
                         text: 'Focus',
                       ),
                       const SizedBox(
                         width: 12,
                       ),
-                      SearchBarButton(
+                      const SearchBarButton(
                         icon: Icons.add_circle_outline_outlined,
                         text: 'Attach',
                       ),
                       const Spacer(),
                       //a button which searches the content when we clicks on it-submit button
                       Container(
-                        padding: EdgeInsets.all(9),
+                        padding: const EdgeInsets.all(9),
                         decoration: BoxDecoration(
                           color: AppColors.submitButton,
                           borderRadius: BorderRadius.circular(40),

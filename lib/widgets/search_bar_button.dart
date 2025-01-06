@@ -24,7 +24,7 @@ class _SearchBarButtonState extends State<SearchBarButton> {
         isHovered = false;
       }),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
           color:isHovered?AppColors.proButton: Colors.transparent,
           borderRadius: BorderRadius.circular(6),
@@ -39,7 +39,7 @@ class _SearchBarButtonState extends State<SearchBarButton> {
             const SizedBox(width: 8),
             Text(
               widget.text,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.textGrey,
                 fontSize: 16,
               ),
