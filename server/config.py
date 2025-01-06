@@ -9,3 +9,4 @@ load_dotenv()#loaded the dotenv file from python env
 #gitignore the .env file when pushing in repo(purpose is to securely store your api key so that no one sees it)
 class Settings(BaseSettings):
     TAVILY_API_KEY: str=""#if it is present,it will be figured out otherwise i have initialised it to a empty string
+    GEMINI_API_KEY: str=""
