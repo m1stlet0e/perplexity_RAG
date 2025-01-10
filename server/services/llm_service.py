@@ -30,6 +30,10 @@ class LLMService:
         Please provide a comprehensive, detailed ,well-cited accurate response using the above context.Think and reason deeply. Ensure it answers the query the user is asking. Do not use your own knowledge untill it is absolutely necssary
         """
 
-        response=self.model.generate_content(full_prompt)
+        response=self.model.generate_content(full_prompt,stream=True)#stream=True means that we are going to get the response in chunks
+        #stream=True means that this becomes a generator ,so this generate content fxn is return a bunch of values so i will loop over it and return them
+        for chunk in response:
+            #return chunk.text
+            yield chunk.text
 
-        return response.text
+        # return response.text
