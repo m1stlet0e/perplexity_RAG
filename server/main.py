@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import FastAPI, WebSocket
 
 from pydantic_models.chat_body import ChatBody
@@ -24,24 +25,27 @@ async def websocket_chat_endpoint(websocket: WebSocket):#accepting the websocket
     await websocket.accept()#since await not given so convert the whole fxn into an async fxn
     
     try:
+        await asyncio.sleep(0.1)
         data=await websocket.receive_json()#receive the data from the websocket
-        print(data)
+        # print(data)
         #(we get a dictionary fron the websocket and in that dictionary we just look for the query argument so that we get the correct value)
         query=data.get('query')#get the query from the data that we received
         #we can add additional checks that if not query then we will return an error
-        print(query)
+        # print(query)
 
         search_results=search_service.web_search(query)
-        print(search_results)
+        # print(search_results)
         sorted_results=sort_source_service.sort_sources(query,search_results)
         #as soon as we get the results i will send this data back to our frontend side
         #so after we get the search results and after we are done sorting it ,we will send it back to the user
-        print(sorted_results)
+        # print("hi ",sorted_results," ihj")
+        await asyncio.sleep(0.1)
         await websocket.send_json({"type":"search_results","data":sorted_results})
-        print("hi")
+        # print("hi")
         #how do i stream this  data fron this websocket to my client side
         for chunk in llm_service.generate_response(query,sorted_results):
-            await websocket.send_json({"type":'content','data':chunk})
+            await asyncio.sleep(0.1)
+            await websocket.send_json({"type":"content","data":chunk})
 
                
     

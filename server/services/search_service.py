@@ -23,7 +23,7 @@ class SearchService:
                 results.append({
                     "title":result.get("title",""),
                     "url":result.get("url"),
-                    "content":content
+                    "content":content or "",
                 })
                 #we are doing this since we want to give additional context to gemini but also when we will be displaying the results on frontend we have to list out the sources
 
