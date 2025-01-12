@@ -19,9 +19,12 @@ class ChatWebService{
         });
         //since i already k that message will be in json or map so i can convert it to json format or map and then use it(we have send_json in main.py)
     }
-    void chat(){
+    void chat(String query){
         //basically tells the server that hey listen the sent button was clicked ,so send the query over to the websocket and then our connect fxn is anyways listening to all the data
+        //whenever the user clicks the send button,we will send the query to the server
 
+        _socket!.send({'query':query});//socket is not null since we assume that connect is always called before chat is called
+        //but still i posiibilty exists that chat is called before connect is called so we can use assert to check that
     }
   
 }

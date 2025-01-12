@@ -7,8 +7,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:perplexity_clone/theme/colors.dart';
 import 'package:perplexity_clone/widgets/search_bar_button.dart';
 
-class SearchSection extends StatelessWidget {
+import '../services/chat_web_service.dart';
+
+class SearchSection extends StatefulWidget {
   const SearchSection({super.key});
+
+  @override
+  State<SearchSection> createState() => _SearchSectionState();
+}
+
+class _SearchSectionState extends State<SearchSection> {
+  final queryController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    queryController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +51,10 @@ class SearchSection extends StatelessWidget {
               children: [
                 //textfield and not a text form field because i am not validating anything
                 //it is just a form where i can put enter
-                const Padding(
+                 Padding(
                   padding: EdgeInsets.all(16.0),
                   child: TextField(
+                    controller: queryController,
                     decoration: InputDecoration(
                       hintText: "Search anything...",
                       border: InputBorder.none,
@@ -71,14 +88,19 @@ class SearchSection extends StatelessWidget {
                       ),
                       const Spacer(),
                       //a button which searches the content when we clicks on it-submit button
-                      Container(
-                        padding: const EdgeInsets.all(9),
-                        decoration: BoxDecoration(
-                          color: AppColors.submitButton,
-                          borderRadius: BorderRadius.circular(40),
+                      GestureDetector(
+                        onTap: (){
+                          ChatWebService().chat(queryController.text.trim());//created an instance and called the chat fxn
+                        },//u can check other types of validation too to perform but i am just performing a simple framework
+                        child: Container(
+                          padding: const EdgeInsets.all(9),
+                          decoration: BoxDecoration(
+                            color: AppColors.submitButton,
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: const Icon(Icons.arrow_forward,
+                              color: AppColors.background),
                         ),
-                        child: const Icon(Icons.arrow_forward,
-                            color: AppColors.background),
                       ),
                     ],
                   ),
