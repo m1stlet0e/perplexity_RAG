@@ -5,7 +5,7 @@ import 'package:web_socket_client/web_socket_client.dart';
 import 'dart:convert';
 
 class ChatWebService{
-    WebSocket? _socket;//making it a private variable
+    WebSocket? _socket;//making it a private variable.also,it can be nullable
     void connect(){
         //in this i will connect to the backend and start listening to the particular websocket port so that whenever the server start sending message
         //to us,we listen to them and store them with us

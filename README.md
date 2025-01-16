@@ -2,6 +2,10 @@
 
 This repository contains the implementation of a Perplexity app clone using **Flutter**, **Tavily API**, and **Gemini API**. The application mimics the functionality of a Perplexity-like search assistant, providing accurate and concise answers based on web searches and LLM (Large Language Model) responses.
 
+## Screenshot
+![Home Screen](screenshots/home_screen.png)
+![Home Screen](screenshots/expanded.png)
+
 ## Features
 
 1. **Web Search Integration:** Searches the web for relevant information using Tavily API.
