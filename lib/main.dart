@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
        ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const ChatPage(),
+      home: const HomePage(),
     );
   }
 }

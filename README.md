@@ -1,7 +1,8 @@
 # Perplexity App Clone
 
 This repository contains the implementation of a Perplexity app clone using **Flutter**, **Tavily API**, and **Gemini API**. The application mimics the functionality of a Perplexity-like search assistant, providing accurate and concise answers based on web searches and LLM (Large Language Model) responses.
-
+## FlowChart
+![Flow Diagram](screenshots/flowchart.png)
 ## Screenshot
 ![Home Screen](screenshots/home_screen.png)
 ![Home Screen](screenshots/expanded.png)
