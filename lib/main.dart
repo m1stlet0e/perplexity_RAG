@@ -20,11 +20,18 @@ class MyApp extends StatelessWidget {
        scaffoldBackgroundColor:  AppColors.background,
        colorScheme: ColorScheme.fromSeed(seedColor:AppColors.submitButton),
        textTheme:GoogleFonts.interTextTheme(
-        ThemeData.dark().textTheme,//a theme where everything is in dark mode so the text will be white(dark mode ki text theme is accessed)
+        ThemeData.dark().textTheme.copyWith(
+          bodyMedium:const TextStyle(
+            fontSize: 15,
+            color:AppColors.whiteColor,
+            ), 
+        ),//a theme where everything is in dark mode so the text will be white(dark mode ki text theme is accessed)
        ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const ChatPage(
+        question:'what is India vs Australia score?',
+      ),
     );
   }
 }
