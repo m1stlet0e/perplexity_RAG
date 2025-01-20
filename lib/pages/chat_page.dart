@@ -64,3 +64,6 @@ class ChatPage extends StatelessWidget {
     );
   }
 }
+//i want a ui skelationizer when the data is being loaded and processing since the ui looks empty
+//skelaton loader->shimmer effect before the data comes
+//documentation->wrap our layout with skealtionizer widget and give it a tag of enabled

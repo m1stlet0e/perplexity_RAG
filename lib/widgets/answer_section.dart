@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:perplexity_clone/services/chat_web_service.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AnswerSection extends StatefulWidget {
   const AnswerSection({super.key});
@@ -9,6 +11,8 @@ class AnswerSection extends StatefulWidget {
 }
 
 class _AnswerSectionState extends State<AnswerSection> {
+  bool isLoading = true;
+  // String fullResponse = '';
   String fullResponse = '''
 As of the end of Day 1 in the fourth Test match between India and Australia, the score stands at **Australia 311/6**. The match is being held at the Melbourne Cricket Ground (MCG) on December 26, 2024.
 
@@ -31,6 +35,20 @@ As of the end of Day 1 in the fourth Test match between India and Australia, the
 As play concluded for the day, Australia stood at **311/6**, with Steve Smith holding firm as India looks to capitalize on their late breakthroughs on Day 2. The match remains finely balanced, with both teams having opportunities to seize control as they progress through this critical Test match in the Border-Gavaskar Trophy series[1][2][3][5].
 ''';
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ChatWebService().contentStream.listen((data) {
+      if (isLoading) {
+        fullResponse = "";//since we want to set fullresponse to an empty string as soon as we get first piece of our data
+      }
+      setState(() {
+        fullResponse +=data['data'] ;
+        isLoading = false;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,19 +65,22 @@ As play concluded for the day, Australia stood at **311/6**, with Steve Smith ho
 
         //we don't want text widget,we want a markdown
 
-        Markdown(data: fullResponse,
-        shrinkWrap: true,
-        //special arrangements u can do with markdown like u can change how a code block looks like
-        styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(//theme.of(context) means that go to the material app or the closest themedata u can find in the widget tree ans since we have define it only in the material app,so it will go there
-          //h1->#
-          //h2->##
-          //h3->###
-          codeblockDecoration: BoxDecoration(
-            color: Colors.grey[800],
-            borderRadius: BorderRadius.circular(4),
+        Skeletonizer(
+          enabled: isLoading,
+          child: Markdown(data: fullResponse,
+          shrinkWrap: true,
+          //special arrangements u can do with markdown like u can change how a code block looks like
+          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(//theme.of(context) means that go to the material app or the closest themedata u can find in the widget tree ans since we have define it only in the material app,so it will go there
+            //h1->#
+            //h2->##
+            //h3->###
+            codeblockDecoration: BoxDecoration(
+              color: Colors.grey[800],
+              borderRadius: BorderRadius.circular(4),
+            ),
+            code: const TextStyle(fontSize: 14,fontFamily: 'monospace')
           ),
-          code: const TextStyle(fontSize: 14,fontFamily: 'monospace')
-        ),
+          ),
         )
       ],
     );

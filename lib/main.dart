@@ -29,9 +29,7 @@ class MyApp extends StatelessWidget {
        ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const ChatPage(
-        question:'what is India vs Australia score?',
-      ),
+      home: const HomePage(),
     );
   }
 }

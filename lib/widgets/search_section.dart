@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:perplexity_clone/theme/colors.dart';
 import 'package:perplexity_clone/widgets/search_bar_button.dart';
 
+import '../pages/chat_page.dart';
 import '../services/chat_web_service.dart';
 
 class SearchSection extends StatefulWidget {
@@ -91,6 +92,10 @@ class _SearchSectionState extends State<SearchSection> {
                       GestureDetector(
                         onTap: (){
                           ChatWebService().chat(queryController.text.trim());//created an instance and called the chat fxn
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context)=>ChatPage(question: queryController.text.trim(),),)
+                          );
                         },//u can check other types of validation too to perform but i am just performing a simple framework
                         child: Container(
                           padding: const EdgeInsets.all(9),
@@ -111,3 +116,4 @@ class _SearchSectionState extends State<SearchSection> {
     );
   }
 }
+
