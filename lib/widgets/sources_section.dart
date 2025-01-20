@@ -90,7 +90,7 @@ class _SourcesSectionState extends State<SourcesSection> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      res['title'],
+                      res['title'] ?? 'No title',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -100,7 +100,7 @@ class _SourcesSectionState extends State<SourcesSection> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      res['url'],
+                      res['url'] ?? 'No URL',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
