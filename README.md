@@ -6,6 +6,7 @@ This repository contains the implementation of a Perplexity app clone using **Fl
 ## Screenshot
 ![Home Screen](screenshots/home_screen.png)
 ![Home Screen](screenshots/expanded.png)
+![Chat Page](screenshots/chat_page.png)
 
 ## Features
 
