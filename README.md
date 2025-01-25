@@ -51,11 +51,11 @@ The backend logic of the app is structured into three main steps:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-repo-link.git
+   git clone [https://github.com/your-repo-link.git](https://github.com/k3tikvats/perplexity_RAG.git)
    ```
 2. Navigate to the project directory:
    ```bash
-   cd perplexity_app_clone
+   cd perplexity_RAG
    ```
 3. Install dependencies:
    ```bash
