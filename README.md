@@ -51,11 +51,11 @@ The backend logic of the app is structured into three main steps:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-repo-link.git
+   git clone https://github.com/k3tikvats/perplexity_RAG.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd perplexity_app_clone
+   cd perplexity_RAG
    ```
 3. Install dependencies:
    ```bash
@@ -90,7 +90,7 @@ The backend logic of the app is structured into three main steps:
 2. **Web Search:** Tavily API retrieves web search results.
 3. **Similarity Ranking:** The app calculates cosine similarity between the query and search results to rank sources.
 4. **Response Generation:** Gemini API uses the top-ranked sources to generate a response.
-
+5. **WebSocket**: For real-time chat functionality and communication between client and server.
 ---
 
 ## Example
