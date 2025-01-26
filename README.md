@@ -44,7 +44,7 @@ The backend logic of the app is structured into three main steps:
 2. **Tavily API:** To perform web searches and fetch relevant results.
 3. **Gemini API:** For leveraging LLM capabilities to generate responses.
 4. **Sentence Transformers:** To perform similarity searches using vector embeddings.
-
+5. **WebSocket**: For real-time chat functionality and communication between client and server.
 ---
 
 ## Installation
