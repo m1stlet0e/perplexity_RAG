@@ -1,76 +1,57 @@
 //in this class i aim to achieve 2 methods
 //1.connect->connect to the backend server(setting up the connection)
 //2.chat->to perform search operation on the backend server
+// WebSocket聊天服务类，负责与后端服务器的通信
 import 'package:web_socket_client/web_socket_client.dart';
 import 'dart:convert';
 import 'dart:async';
 
+// 单例模式实现的聊天服务类
 class ChatWebService {
-  static final _instance =ChatWebService._internal(); //2.creating a static instance of the class
-  WebSocket? _socket; //making it a private variable.also,it can be nullable
+  // 私有静态实例，确保全局只有一个ChatWebService实例
+  static final _instance = ChatWebService._internal(); 
+  // WebSocket连接对象，可为空
+  WebSocket? _socket;
 
-  factory ChatWebService() =>
-      _instance; //3.factory constructor is used to return the instance of the class
+  // 工厂构造函数，返回单例实例
+  factory ChatWebService() => _instance;
 
-  ChatWebService._internal(); //1.making it a private constructor
-  //now i will create a  instance of this CWS class so that we can manage the instance only within the class
+  // 私有构造函数，防止外部直接创建实例
+  ChatWebService._internal();
 
-//steps i done to ensure this class is singleton:-
-//1.made the constructor private-(this prevents the class from being instantiated from outside(externally))
-//2.created a static instance variable of the class-which ensures that only one object of ChatWebService exists
-//3.created a factory constructor-which returns the instance of the class
-//so whenever i create an instance of this class, it will return the same instance of the class(ensured by 3rd point)
+  // 搜索结果的流控制器，用于存储和传递搜索结果
+  final _searchResultController = StreamController<Map<String,dynamic>>();
+  // 内容流控制器，用于存储和传递Gemini生成的内容
+  final _contentController = StreamController<Map<String,dynamic>>();
 
+  // 公开的搜索结果流，供外部监听
+  Stream<Map<String,dynamic>> get searchResultStream => _searchResultController.stream;
+  // 公开的内容流，供外部监听
+  Stream<Map<String,dynamic>> get contentStream => _contentController.stream;
 
-  final _searchResultController=StreamController<Map<String,dynamic>>();//this will be used to store the search results
-  final _contentController=StreamController<Map<String,dynamic>>();//keeps track of all the content that gemini is sending to us
-
-  //i would now have 2 public getters that will expose the stream from here since stream controllers are not exposed outside since that can be dangerous
-  //u don't want anyone else controlling ur stream ,only member within class can control or modify it
-
-  Stream<Map<String,dynamic>> get searchResultStream=>_searchResultController.stream;//fix this error by giving type to the Stream controllers above
-  Stream<Map<String,dynamic>> get contentStream=>_contentController.stream;//fix this error by giving type to the Stream controllers above
-
-//now based on the data at type i want to add to a particular controller
-
+  // 连接到WebSocket服务器
   void connect() {
-    //in this i will connect to the backend and start listening to the particular websocket port so that whenever the server start sending message
-    //to us,we listen to them and store them with us
-
-    _socket = WebSocket(Uri.parse(
-        "ws://localhost:8000/ws/chat")); //u can also store the data in dotenv file and the retrieve here
-    //socket is connected now we need to listen to the messages
+    // 创建WebSocket连接
+    _socket = WebSocket(Uri.parse("ws://localhost:8000/ws/chat"));
+    
+    // 监听WebSocket消息
     _socket!.messages.listen((message) {
-      //!->since it is no longer nullable
+      // 解析JSON消息
+      final data = json.decode(message);
 
-      final data =
-          json.decode(message); //decode will convert the json string to map
-      // print(data['type']); //every msg that i send has a type
-
-
-      //now based on the data at type i want to add to a particular controller
-      if(data['type']=='search_result'){
-        _searchResultController.add(data);//passsing the entire data map that we get
+      // 根据消息类型分发到不同的流
+      if(data['type'] == 'search_result') {
+        _searchResultController.add(data);
       }
-      else if(data['type']=='content'){
+      else if(data['type'] == 'content') {
         _contentController.add(data);
       }
     });
-    //since i already k that message will be in json or map so i can convert it to json format or map and then use it(we have send_json in main.py)
   }
 
+  // 发送聊天查询
   void chat(String query) {
-    //basically tells the server that hey listen the sent button was clicked ,so send the query over to the websocket and then our connect fxn is anyways listening to all the data
-    //whenever the user clicks the send(->) button,we will send the query to the server
-    print(query);
-    print(_socket);
-
-    _socket!.send(json.encode({'query': query})); //socket is not null since we assume that connect is always called before chat is called
-    //but still a possibility exists that chat is called before connect is called so we can use assert to check that
-
-    //error-can't directly send a map to the server,so we need to convert it to json,i.e json.encode
+    // 发送查询到服务器
+    _socket!.send(json.encode({'query': query}));
   }
 }
-//now we can use this chatwebservice class in our home_page.dart file to connect 
-//then call the chat fxn on other widget to send the query to the server
-//and listen to these messages or actually get the messages on some other page

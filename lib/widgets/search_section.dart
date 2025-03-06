@@ -10,6 +10,7 @@ import 'package:perplexity_clone/widgets/search_bar_button.dart';
 import '../pages/chat_page.dart';
 import '../services/chat_web_service.dart';
 
+// 搜索部分Widget，包含搜索框和按钮
 class SearchSection extends StatefulWidget {
   const SearchSection({super.key});
 
@@ -17,13 +18,15 @@ class SearchSection extends StatefulWidget {
   State<SearchSection> createState() => _SearchSectionState();
 }
 
+// 搜索部分状态类
 class _SearchSectionState extends State<SearchSection> {
+  // 搜索输入控制器
   final queryController = TextEditingController();
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
+    // 释放控制器资源
     queryController.dispose();
   }
 
@@ -32,6 +35,7 @@ class _SearchSectionState extends State<SearchSection> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // 标题文本
         Text("Where knowledge begins",
             style: GoogleFonts.ibmPlexMono(
               fontSize: 40,
@@ -41,6 +45,7 @@ class _SearchSectionState extends State<SearchSection> {
         const SizedBox(
           height: 32,
         ),
+        // 搜索框容器
         Container(
             width: 700,
             decoration: BoxDecoration(
@@ -50,32 +55,32 @@ class _SearchSectionState extends State<SearchSection> {
                     width: 1.5)),
             child: Column(
               children: [
-                //textfield and not a text form field because i am not validating anything
-                //it is just a form where i can put enter
-                 Padding(
+                // 搜索输入框
+                Padding(
                   padding: EdgeInsets.all(16.0),
                   child: TextField(
                     controller: queryController,
                     decoration: InputDecoration(
                       hintText: "Search anything...",
                       border: InputBorder.none,
-                      // prefixIcon: Icon(Icons.search),
                       hintStyle: TextStyle(
                         color: AppColors.textGrey,
                         fontSize: 16,
                       ),
                       isDense: true,
-                      contentPadding: EdgeInsets.zero,//compresses the padding
+                      contentPadding: EdgeInsets.zero,
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 2,
                 ),
+                // 底部按钮栏
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
                     children: [
+                      // Focus按钮
                       const SearchBarButton(
                         icon: Icons.auto_awesome_outlined,
                         text: 'Focus',
@@ -83,20 +88,22 @@ class _SearchSectionState extends State<SearchSection> {
                       const SizedBox(
                         width: 12,
                       ),
+                      // Attach按钮
                       const SearchBarButton(
                         icon: Icons.add_circle_outline_outlined,
                         text: 'Attach',
                       ),
                       const Spacer(),
-                      //a button which searches the content when we clicks on it-submit button
+                      // 提交按钮
                       GestureDetector(
                         onTap: (){
-                          ChatWebService().chat(queryController.text.trim());//created an instance and called the chat fxn
+                          // 发送查询并导航到聊天页面
+                          ChatWebService().chat(queryController.text.trim());
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context)=>ChatPage(question: queryController.text.trim(),),)
                           );
-                        },//u can check other types of validation too to perform but i am just performing a simple framework
+                        },
                         child: Container(
                           padding: const EdgeInsets.all(9),
                           decoration: BoxDecoration(

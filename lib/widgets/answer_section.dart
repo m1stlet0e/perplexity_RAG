@@ -3,6 +3,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:perplexity_clone/services/chat_web_service.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+// 回答部分Widget，用于显示AI的回答内容
 class AnswerSection extends StatefulWidget {
   const AnswerSection({super.key});
 
@@ -10,9 +11,11 @@ class AnswerSection extends StatefulWidget {
   State<AnswerSection> createState() => _AnswerSectionState();
 }
 
+// 回答部分状态类
 class _AnswerSectionState extends State<AnswerSection> {
+  // 加载状态标志
   bool isLoading = true;
-  // String fullResponse = '';
+  // 存储完整的回答文本
   String fullResponse = '''
 As of the end of Day 1 in the fourth Test match between India and Australia, the score stands at **Australia 311/6**. The match is being held at the Melbourne Cricket Ground (MCG) on December 26, 2024.
 
@@ -35,13 +38,14 @@ As of the end of Day 1 in the fourth Test match between India and Australia, the
 As play concluded for the day, Australia stood at **311/6**, with Steve Smith holding firm as India looks to capitalize on their late breakthroughs on Day 2. The match remains finely balanced, with both teams having opportunities to seize control as they progress through this critical Test match in the Border-Gavaskar Trophy series[1][2][3][5].
 ''';
 
-@override
+  @override
   void initState() {
-    // TODO: implement initState
+    // 初始化状态
     super.initState();
+    // 监听内容流，更新UI显示
     ChatWebService().contentStream.listen((data) {
       if (isLoading) {
-        fullResponse = "";//since we want to set fullresponse to an empty string as soon as we get first piece of our data
+        fullResponse = "";//当收到第一条数据时，清空fullResponse
       }
       setState(() {
         fullResponse +=data['data'] ;

@@ -6,6 +6,7 @@ import 'package:perplexity_clone/widgets/side_bar.dart';
 
 
 
+// 首页Widget，使用StatefulWidget以管理WebSocket连接状态
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -13,105 +14,88 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+// 首页状态类
 class _HomePageState extends State<HomePage> {
+  // 存储完整的响应文本
   String fullResponse = "";
-
 
   @override
   void initState() {
-    // TODO: implement initState
-    
     super.initState();
-    ChatWebService().connect();//this will connect to the backend server
+    // 初始化时连接到WebSocket服务器
+    ChatWebService().connect();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Row(
+      body: Row(
         children: [
-          //side navbar
+          // 侧边导航栏
           const SideBar(),
 
-
-          //column containg 3 things-text,search bar and footer
-          Expanded(//by using expanded,we are telling the column to take as much space as it can, that is take the entire height
-          //when we use this widget in a row, it will take the entire width
+          // 主要内容区域，包含搜索部分和页脚
+          Expanded(
             child: Column(
               children: [
-                //text
+                // 搜索部分，使用Expanded使其占据剩余空间
                 Expanded(child: SearchSection()),
-                //search bar
-                Container(
-                  height: 20,
-                ),
-
-
-
-                // StreamBuilder(
-                //   stream: ChatWebService().contentStream, 
-                //   builder: (context,snapshot){
-                //     if(snapshot.connectionState==ConnectionState.waiting){
-                //       return const Center(child:CircularProgressIndicator());
-                //     }
-
-                //     fullResponse = snapshot.data?['data']??'';//hey this data can be null,but if it is null then  we are going to treat it as an empty string,otherwise just append this data
-                //     return Text(fullResponse);
-                //     // return Text(snapshot.data()['content']);
-                //   }),//as soon as the content stream changes,the data is going to get updated,so that content will be changed
                 
-                  //india vs australia->X
-                  //india,then india will be replaced by australia                
-                  //it's not the entire text that has already been given to us in the past,it is just reflection of what data gemini is sending to us
+                // 间隔
+                Container(height: 20),
 
-                  //but when we use the fullresponse string it will be india vs australia full text(past+latest stream data)
-
-                //footer
+                // 页脚部分
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  //we used wrap instead of row because wrap will automatically wrap the children to the next line if the width is not enough
+                  // 使用Wrap自动换行显示页脚链接
                   child: const Wrap(
                     alignment: WrapAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal:12),
-                        child:Text("Pro",style:TextStyle(
-                          color:AppColors.footerGrey,
-                          fontSize: 16,)),
-                        ),
-                        Padding(
-                        padding: EdgeInsets.symmetric(horizontal:12),
-                        child:Text("Enterprise",style:TextStyle(
-                          color:AppColors.footerGrey,
-                          fontSize: 16,)),
-                        ),
-                        Padding(
-                        padding: EdgeInsets.symmetric(horizontal:12),
-                        child:Text("Store",style:TextStyle(
-                          color:AppColors.footerGrey,
-                          fontSize: 16,)),
-                        ),
-                        Padding(
-                        padding: EdgeInsets.symmetric(horizontal:12),
-                        child:Text("Blog",style:TextStyle(
-                          color:AppColors.footerGrey,
-                          fontSize: 16,)),
-                        ),
-                        Padding(
-                        padding: EdgeInsets.symmetric(horizontal:12),
-                        child:Text("Careers",style:TextStyle(
-                          color:AppColors.footerGrey,
-                          fontSize: 16,)),
-                        ),
-                        Padding(
-                        padding: EdgeInsets.symmetric(horizontal:12),
-                        child:Text("English(English)",style:TextStyle(
-                          color:AppColors.footerGrey,
-                          fontSize: 16,)),
-                        )
-
-                    ],),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text("Pro", style: TextStyle(
+                          color: AppColors.footerGrey,
+                          fontSize: 16,
+                        )),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text("Enterprise", style: TextStyle(
+                          color: AppColors.footerGrey,
+                          fontSize: 16,
+                        )),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text("Store", style: TextStyle(
+                          color: AppColors.footerGrey,
+                          fontSize: 16,
+                        )),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text("Blog", style: TextStyle(
+                          color: AppColors.footerGrey,
+                          fontSize: 16,
+                        )),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text("Careers", style: TextStyle(
+                          color: AppColors.footerGrey,
+                          fontSize: 16,
+                        )),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: Text("English(English)", style: TextStyle(
+                          color: AppColors.footerGrey,
+                          fontSize: 16,
+                        )),
+                      )
+                    ],
+                  ),
                 ),
-                
               ],
             ),
           ),

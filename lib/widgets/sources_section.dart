@@ -5,6 +5,7 @@ import 'package:perplexity_clone/services/chat_web_service.dart';
 import 'package:perplexity_clone/theme/colors.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+// 来源展示部分Widget，用于显示搜索结果的来源信息
 class SourcesSection extends StatefulWidget {
   const SourcesSection({super.key});
 
@@ -12,10 +13,11 @@ class SourcesSection extends StatefulWidget {
   State<SourcesSection> createState() => _SourcesSectionState();
 }
 
+// 来源展示部分状态类
 class _SourcesSectionState extends State<SourcesSection> {
+  // 加载状态标志
   bool isLoading = true;
-  // List searchResults = [];//in debug console ,we find that it was of the type JSarray,so we dropped map<string,dynamic>>
-  //dummy data
+  // 搜索结果列表，包含标题和URL
   List searchResults = [
     {
       'title': 'Ind vs Aus Live Score 4th Test',
@@ -33,33 +35,36 @@ class _SourcesSectionState extends State<SourcesSection> {
           'https://economictimes.indiatimes.com/news/sports/ind-vs-aus-four-australian-batters-score-half-centuries-in-boxing-day-test-jasprit-bumrah-leads-indias-fightback/articleshow/116674365.cms',
     },
   ];
+
   @override
   void initState() {
     super.initState();
+    // 监听搜索结果流，更新UI
     ChatWebService().searchResultStream.listen((data) {
       setState(() {
-        // searchResults.add(data['data']);//we are adding list of search results to the search results list->we don't want
-        //main.py file is sending data in the form of a dictionary,so we are adding that data to the search results(sorted_results)
-      //coz sorted results contains 2 thing->title and url
-
-      searchResults = data['data'];
-      isLoading = false;
+        // 更新搜索结果列表
+        searchResults = data['data'];
+        // 更新加载状态
+        isLoading = false;
       });
-      
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // 来源标题栏
         Row(
           children: [
+            // 来源图标
             Icon(
               Icons.source_outlined,
               color: Colors.white70,
             ),
             SizedBox(width: 8),
+            // 来源文本
             Text(
               "Sources",
               style: TextStyle(
@@ -70,18 +75,18 @@ class _SourcesSectionState extends State<SourcesSection> {
           ],
         ),
         SizedBox(height: 16),
-        //why wrap?coz if the sources card extend the width of how much width is available,we want to move to the next line
+        // 使用Skeletonizer实现加载效果
         Skeletonizer(
           enabled: isLoading,
           child: Wrap(
-            spacing: 16,//how much space bw the mainaxis
-            runSpacing: 16,//how much space bw the crossaxis
+            spacing: 16,
+            runSpacing: 16,
             children: searchResults.map((res){
-              //for every search result,we are going to return a source card
-              //it is a container that has 2 elements vertically laid out,i.e column
+              // 为每个搜索结果创建一个卡片
               return Container(
                 width: 150,
                 padding: const EdgeInsets.all(16),
+                // 设置卡片样式
                 decoration: BoxDecoration(
                   color: AppColors.cardColor,
                   borderRadius: BorderRadius.circular(8),
@@ -89,29 +94,20 @@ class _SourcesSectionState extends State<SourcesSection> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // 显示来源标题
                     Text(
                       res['title'] ?? 'No title',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
-                      maxLines: 2,
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      res['url'] ?? 'No URL',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,//.... if we run out of space
                     ),
                   ],
                 ),
               );
-            }).toList(),//mapping thru every search result,and whenever we get a serach result we are returning a widget from there(creating a list of widgets based on these results)
+            }).toList(),
           ),
         ),
       ],
